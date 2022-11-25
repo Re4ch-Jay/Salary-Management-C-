@@ -26,7 +26,16 @@
 
 12. Delete All users that exist in the list 
 
-13. Exit the console application 
+13. Update data
+
+14. Sorted small to big
+
+15. Sorted big to small
+
+16. Save data
+
+
+0. Exit the console application 
 
 ##### This project included:
 

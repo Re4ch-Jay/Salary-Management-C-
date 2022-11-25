@@ -23,10 +23,27 @@ while(On_Off){
         left--;
         cout << "You have *" << left << "* attempts left \n" << endl;
         }
-        cout << "Enter UserName: ";
-        getline(cin,UseEnter);
-        cout << "Enter Password: ";
-        getline(cin,PassEnter);
+        
+        do
+        {
+            cout<<"\n\tEnter UserName: ";
+            getline(cin,UseEnter);
+            if(UseEnter == "") cout<<"\n\t*****Please input username*****"<<endl;
+            else cout<<"\n\t*****Please input password*****"<<endl;
+        } while (UseEnter == "");
+        
+        do
+        {
+            cout<<"\n\tEnter Password: ";
+            getline(cin,PassEnter);
+            if(PassEnter == "") cout<<"\n\t*****Please input password*****"<<endl;
+        } while (PassEnter == "");
+
+        // cout << "Enter UserName: ";
+        // getline(cin,UseEnter);
+        // cout << "Enter Password: ";
+        // getline(cin,PassEnter);
+        
         countt++;
         string read;
         //====================================================*

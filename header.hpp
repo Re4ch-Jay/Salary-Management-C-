@@ -45,9 +45,14 @@ int isIdExist(List *ls, string ID){
     return result;
 }
 
+
+
+
 void insertBegin(List *ls, string ID, string name, string job, double salary) {
     Element * e;
     e = new Element();
+
+    if(isIdExist(ls, ID) == 1) cout<<"\n\tThis ID is already existed"<<endl;
 
     e->salary = salary;
     e->ID = ID;
@@ -59,8 +64,8 @@ void insertBegin(List *ls, string ID, string name, string job, double salary) {
     if(ls->size == 0) {
         ls->tail = e;
     }
-    ls->size ++;
-    
+    ls->size ++; 
+
 }
 
 void insertEnd(List *ls, string ID, string name, string job, double salary){
@@ -82,6 +87,7 @@ void insertEnd(List *ls, string ID, string name, string job, double salary){
         ls->tail = e;
         ls->size ++;
     }
+
 }
 
 void displayData(List *ls){
@@ -233,9 +239,9 @@ void searchByIdAndDelete(List *ls, string ID)
     //key found on the head Element.
     //move to head Element to the next and free the head.
     if(isIdExist(ls, ID) == 0) cout<<"\n\tThis ID is not found"<<endl;
-    else cout<<"\n\tData has been delete"<<endl;
-    if(e->ID == ID)
+    if(ls->head->ID== ID)
     {
+        
         temp = ls->head;    //backup to free the memory
         ls->head = ls->head->next;
         delete temp;
@@ -264,22 +270,6 @@ void searchByIdAndDelete(List *ls, string ID)
     
 }
 
-void searchByIdAndUpdate(List *ls, string ID){
-    Element *tmp;
-    tmp = ls->head;
-    int counter = 0;
-    if(isIdExist(ls, ID) == 0) cout<<"\n\tThis ID is not found"<<endl;
-    else cout<<"\n\tData has been delete"<<endl;
-    while (tmp != NULL)
-    {
-        if(tmp->ID == ID) {
-            deleteBegin(ls);
-
-        }
-        tmp = tmp->next;
-    }
-    
-}
 
 
 double findMax1(List *ls){
@@ -383,17 +373,109 @@ double findMin(List *ls) {
     return min;
 }
 
+
+void updateData(List*ls, string ID, string newID, string name, string job, double salary) {
+   int pos = 0;
+   
+   if(ls->head ==NULL) {
+      printf("Linked List not initialized");
+      return;
+   } 
+
+   ls->tail = ls->head;
+   while(ls->tail->next!=NULL) {
+      if(ls->tail->ID == ID) {
+         ls->tail->ID= newID; 
+         ls->tail->name= name; 
+         ls->tail->job= job; 
+         ls->tail->salary= salary; 
+         cout<<"\n\tID: "<<ID<<" has been updated: "<<endl;
+         cout<<"\n\tID: "<<ID<<endl;
+         cout<<"\n\tName: "<<name<<endl;
+         cout<<"\n\tJob: "<<job<<endl;
+         cout<<"\n\tSalary: "<<salary<<endl;
+         return;
+      }
+      
+      ls->tail = ls->tail->next;
+      pos++;
+   }
+   cout<<"\n\tThat ID is not exist in the list"<<endl;
+}
+
+void sort(List * ls) {
+    Element * current;
+    current = ls->head;
+    Element * index;
+    index = NULL;
+
+    int temp;
+    if(current == NULL) {  
+        
+        return;  
+    }  
+    else {  
+        while(current != NULL) {  
+            //Node index will point to node next to current  
+            index = current->next;  
+                
+            while(index != NULL) {  
+                //If current node's data is greater than index's node data, swap the data between them  
+                if(current->salary > index->salary) {  
+                    temp = current->salary;  
+                    current->salary = index->salary;  
+                    index->salary = temp;  
+                }  
+                index = index->next;  
+            }  
+            current = current->next;  
+        }      
+    } 
+}
+
+void sortReverse(List * ls) {
+    Element * current;
+    current = ls->head;
+    Element * index;
+    index = NULL;
+
+    int temp;
+    if(current == NULL) {  
+        
+        return;  
+    }  
+    else {  
+        while(current != NULL) {  
+            //Node index will point to node next to current  
+            index = current->next;  
+                
+            while(index != NULL) {  
+                //If current node's data is greater than index's node data, swap the data between them  
+                if(current->salary < index->salary) {  
+                    temp = current->salary;  
+                    current->salary = index->salary;  
+                    index->salary = temp;  
+                }  
+                index = index->next;  
+            }  
+            current = current->next;  
+        }      
+    } 
+}
+
 void saveData(List *ls){
     fstream file;
-    file.open("data.txt", ios::out);
+    file.open("data.txt", ios::app);
     Element * tmp;
     tmp = ls->head;
-
-    while (tmp != NULL)
-    {
-        file<<"\n\tName: "<<tmp->name<<"\tID: "<<tmp->ID<<"\tJob: "<<tmp->job<<"\tSalary: $"<<tmp->salary<<endl;
-        tmp = tmp->next;
+    if(file.is_open()) {
+        while (tmp != NULL)
+        {
+            file<<"\n\tName: "<<tmp->name<<"\tID: "<<tmp->ID<<"\tJob: "<<tmp->job<<"\tSalary: $"<<tmp->salary<<endl;
+            tmp = tmp->next;
+        }
     }
+    
     file.close();
 }
 
